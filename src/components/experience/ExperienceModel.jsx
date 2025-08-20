@@ -1,11 +1,15 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ExperienceGLTFLoader from './ExperienceGLTFLoader'
 import { useThree } from '@react-three/fiber'
 import GUI from 'lil-gui'
+import { useExperienceContext } from '@/libs/contextProviders/experienceContext'
 
 export default function ExperienceModel({data}) {
+    const {experienceState}=useExperienceContext()
     const {scene}=useThree()
+    const [updateHideLevelState, setUpdateHideLevelState]=useState(false)
+    const [updatedObjectsList, setUpdateObjectList]=useState(data?.hideLevel || [])
     const ref = useRef()
 
     useEffect(() => {
@@ -25,8 +29,30 @@ export default function ExperienceModel({data}) {
             ref.current.position.set(x, y, z)
         }
     }, [data?.position])
+
+    useEffect(() => {
+        experienceState?.hidelevel?.reset && data?.hideLevel?.map(i=>{
+            scene.getObjectByName(i.name).visible=true
+        })
+        handleHideLevel()
+    }, [experienceState?.hidelevel])
+
+    const handleHideLevel = () => {
+        if(!experienceState?.hidelevel?.nameOfObject) return
+        experienceState?.hideleve?.reset && data?.hideLevel?.map(i=>{
+            scene.getObjectByName(i.name).visible=true
+        })
+        const objectMatch=scene?.getObjectByName(experienceState?.hidelevel?.nameOfObject)
+        if(objectMatch && objectMatch?.visible){
+            setUpdateHideLevelState(true)
+            objectMatch.visible=experienceState?.hidelevel?.visible
+        }
+        else{
+            console.log('object not found')
+        }
+    }
     
-    // console.log('ExperienceModel:',data)
+    // console.log('ExperienceModel:',updatedObjectsList)
   return (
     <group 
         ref={ref}
@@ -46,6 +72,11 @@ export default function ExperienceModel({data}) {
                 <ExperienceGLTFLoader path={i}/>
             </group>
         )}
+        <group name={'snapPoints'}>
+            {data?.roomSnaps?.map((i,index)=>
+                <ExperienceGLTFLoader key={index} path={i} name={i?.name}/>
+            )}
+        </group>
     </group>
   )
 }

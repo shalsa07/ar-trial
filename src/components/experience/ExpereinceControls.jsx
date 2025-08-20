@@ -1,15 +1,54 @@
+import { useExperienceContext } from '@/libs/contextProviders/experienceContext'
 import { OrbitControls } from '@react-three/drei'
-import React from 'react'
+import { useThree } from '@react-three/fiber'
+import React, { useEffect, useRef, useState } from 'react'
 import { degToRad } from 'three/src/math/MathUtils'
+import * as THREE from 'three'
+import { ACTIONS_EXPERIENCE } from '@/libs/contextProviders/reducerExperience'
 
 export default function ExpereinceControls({data}) {
-    // console.log('ExpereinceControls:',data)
+  const {experienceState,experienceDispatch}=useExperienceContext()
+  const {scene}=useThree()
+  const refControls=useRef(null)
+
+  useEffect(() => {
+    // console.log('ExpereinceControls:',experienceState?.snapPoint)
+    if(experienceState?.snapPoint=='reset'){
+      // console.log('object',refControls.current.target)
+      refControls.current.target=new THREE.Vector3()
+      experienceDispatch({type:ACTIONS_EXPERIENCE.MODEL_VIEW})
+      // console.log('object',refControls.current)
+    }else{
+      scene.getObjectByName(experienceState?.snapPoint).traverse(i=>{
+        if(i?.isMesh){
+          // console.log('mesh found:',i)
+          if(i?.position && i?.rotation && refControls.current) {
+            const modelPositiomRelativeToScene=i?.getWorldPosition(new THREE.Vector3())
+            const modelRoationRelativeToScene=i?.getWorldQuaternion(new THREE.Quaternion())
+            // console.log('snapoint position:',modelPositiomRelativeToScene)
+            // console.log('snapoint rotation:',modelRoationRelativeToScene)
+            if(modelPositiomRelativeToScene && modelRoationRelativeToScene){
+              refControls.current.target=modelPositiomRelativeToScene
+              refControls.current.object.quaternion.copy(modelRoationRelativeToScene)
+            }
+          }else{
+            console.log('snapPoint Object not yet location or present')
+          }
+          // setSnapPoint(i)
+        }
+      })
+    }
+  }, [experienceState?.snapPoint])
+
+    // console.log('ExpereinceControls:',experienceState?.snapPoint)
   return (
     <OrbitControls
-        minDistance={data?.minDistance}
-        maxDistance={data?.maxDistance}
-        maxPolarAngle={degToRad(90)}
-        minPolarAngle={degToRad(0)}
+      ref={refControls}
+      enablePan={false}
+      minDistance={experienceState?.firstPersonView ? 0 : data?.minDistance}
+      maxDistance={experienceState?.firstPersonView ? 0.5 : data?.maxDistance}
+      maxPolarAngle={degToRad(90)}
+      minPolarAngle={degToRad(0)}
     />
   )
 }

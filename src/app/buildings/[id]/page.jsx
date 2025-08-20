@@ -3,6 +3,8 @@ import React from 'react'
 // import ExperienceWrapper from '@/components/experience/ExperienceWrapper'
 import { url } from '@/libs/libs'
 import dynamic from 'next/dynamic'
+import ExperienceUI from '@/components/experience/ExperienceUI'
+import { ExperienceContext } from '@/libs/contextProviders/experienceContext'
 
 const ExperienceWrapper=dynamic(() => import('@/components/experience/ExperienceWrapper'))
 
@@ -22,14 +24,12 @@ async function getData(id) {
 export default async function page({params}) {
   const {id}=await params
   // const data=getData(id)÷
-  const data=buildingDB[0]
+  const data=buildingDB[id]
   // console.log(data,`${url}/${id}`)
   return (
-    <div className='flex h-svh w-full items-center justify-center overflow-hidden'>
-      <div className='flex capitalize items-center justify-center absolute top-10 mx-auto cursor-pointer z-20'>
-        enter ar
-      </div>
+    <div className='flex relative h-svh w-full items-center justify-center overflow-hidden'>
       <ExperienceWrapper data={data}/>
+      <ExperienceUI data={data}/>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import React from 'react'
 
 export async function GET(req,{params}) {
     const data={buildingDB}
-    const {id}=await params
-    console.log(id,data)
+    // const {id}=await params
+    console.log(data)
     return Response.json(data)
 }

@@ -24,8 +24,8 @@ function GLTFModel({ path }) {
     )
 }
 
-export default function ExperienceGLTFLoader({path}) {
-    // console.log('ExpWorldObj ExpWorldGltfLoader -',path)
+export default function ExperienceGLTFLoader({path,name}) {
+    // console.log('ExpWorldObj ExpWorldGltfLoader -',name)
 
     // Safety check for path
     if (!path?.url) {
@@ -35,9 +35,14 @@ export default function ExperienceGLTFLoader({path}) {
 
     return (
         <Suspense fallback={
-            <mesh>
+            <mesh
+                name={name || ''}
+            >
                 <boxGeometry args={[0.1, 0.1, 0.1]} />
-                <meshBasicMaterial color="gray" transparent opacity={0.3} />
+                <meshBasicMaterial 
+                    color="gray" 
+                    transparent opacity={0.3} 
+                />
             </mesh>
         }>
             <GLTFModel path={path} />
