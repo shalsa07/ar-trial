@@ -24,9 +24,11 @@ export default function ExperienceWorld({data}) {
     const [expandContainer,setExpandContainer]=useState(false)
     const {experienceState,experienceDispatch}=useExperienceContext()
     const [activeBtnIndex,setActiveBtnIndex]=useState(0)
-    // const [objectHiddenState,setObjectHiddenState]=useState(false)
-    // const [levelList,setLevelList]=useState(data?.hideLevel || [])
-    // const [levelListUpdate,setLevelListUpdate]=useState([])
+    const [objectHiddenState,setObjectHiddenState]=useState(false)
+    const [levelList,setLevelList]=useState(data?.hideLevel || [])
+    const [levelListUpdate,setLevelListUpdate]=useState([])
+    const [rotationZ,setRotationZ]=useState(0)
+    const [scaleModel,setScaleModel]=useState([1,0.75,0.50,0.25])
     
     const options=['360s','model',' AR']
     const styleTopCss='btn-wrapper flex h-fit rounded-xl w-full bg-slate-500/50 items-center justify-center p-1 text-white gap-2 shadow'
@@ -35,12 +37,21 @@ export default function ExperienceWorld({data}) {
 
 
     const handleModeClick=(index)=>{
-        console.log('handleModeClick',index)
+        // console.log('handleModeClick',index)
         setActiveBtnIndex(index)
         index==0 && experienceDispatch({type:ACTIONS_EXPERIENCE._360_VIEW})
         index==1 && experienceDispatch({type:ACTIONS_EXPERIENCE.MODEL_VIEW})
         index==2 && experienceDispatch({type:ACTIONS_EXPERIENCE.AR_VIEW})
     }
+
+    const handleModelScale = (value) => {
+      setScaleModel(value)
+    }
+
+    const handleRotationZ = (value) => {
+      setRotationZ(value)
+    }
+    
 
     const handleHideLevelClick=(name)=>{
         // console.log('handleModeClick',name)
@@ -76,7 +87,7 @@ export default function ExperienceWorld({data}) {
         experienceDispatch({type:ACTIONS_EXPERIENCE.SNAPPOINT,payload:snapPoint})
     }
 
-    console.log(experienceState)
+    console.log(experienceState?._360Mode)
 
     return (
         <>
@@ -87,6 +98,16 @@ export default function ExperienceWorld({data}) {
                     data={data}
                     handleModeClick={handleModeClick}
                     activeBtnIndex={activeBtnIndex}
+                    styleTopCss={styleTopCss} 
+                    styleCss={styleCss} 
+                    setExpandContainer={setExpandContainer}
+                    expandContainer={expandContainer}
+                    handleHideLevelClick={handleHideLevelClick}
+                    handleSnapPoint={handleSnapPoint}
+                    rotationZ={rotationZ}
+                    scaleModel={scaleModel}
+                    handleModelScale={handleModelScale}
+                    handleRotationZ={handleRotationZ}
                 />
                 <ExperienceUI 
                     data={data}
