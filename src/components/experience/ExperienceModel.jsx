@@ -24,11 +24,14 @@ export default function ExperienceModel({data}) {
     }, [])
 
     useEffect(() => {
-        if (data?.position) {
+        if (data?.position && experienceState?.modelMode) {
             const [x, y, z] = data.position.split(',').map(Number)
             ref.current.position.set(x, y, z)
-        }
-    }, [data?.position])
+        }else if(data?.arPosition && experienceState?.ARMode){
+            const [x, y, z] = data.arPosition.split(',').map(Number)
+            ref.current.position.set(x, y, z)
+        }   
+    }, [data?.position,data?.arPosition,experienceState?.modelMode,experienceState?.ARMode])
 
     useEffect(() => {
         experienceState?.hidelevel?.reset && data?.hideLevel?.map(i=>{

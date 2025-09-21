@@ -7,6 +7,11 @@ import { FaAngleLeft } from "react-icons/fa6";
 
 export default function ExperienceUI({data,options,styleTopCss,styleCss,styleBtnCss,setExpandContainer,expandContainer,activeBtnIndex,handleHideLevelClick,handleSnapPoint,handleModeClick}) {
     const {experienceState,experienceDispatch}=useExperienceContext()
+
+    if (experienceState.ARMode) {
+        return null
+    }
+
     const [objectHiddenState,setObjectHiddenState]=useState(false)
     const [levelList,setLevelList]=useState(data?.hideLevel || [])
     const [levelListUpdate,setLevelListUpdate]=useState([])

@@ -83,16 +83,11 @@ export default function ExperienceWorld({data}) {
             <div className='flex relative h-svh w-full items-center justify-center overflow-hidden'>
                 <ExperienceWrapper 
                     options={options} 
-                    styleTopCss={styleTopCss} 
-                    styleCss={styleCss} 
                     styleBtnCss={styleBtnCss} 
                     data={data}
-                    handleHideLevelClick={handleHideLevelClick}
-                    handleSnapPoint={handleSnapPoint}
                     handleModeClick={handleModeClick}
                     activeBtnIndex={activeBtnIndex}
                 />
-                <ExperienceWrapper data={data} />
                 <ExperienceUI 
                     data={data}
                     options={options} 
