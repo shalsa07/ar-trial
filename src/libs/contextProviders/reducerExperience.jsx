@@ -64,8 +64,8 @@ export const reducerExperienceFunction=(state,action)=>{
             return {
                 ...state,
                 firstPersonView:true,
-                snapPoint:action.payload,
-        }
+                snapPoint:action.payload
+            }
         default:
             return state;
     }

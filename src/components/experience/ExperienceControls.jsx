@@ -1,4 +1,3 @@
-'use client'
 import { useExperienceContext } from '@/libs/contextProviders/experienceContext'
 import { OrbitControls } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
@@ -13,21 +12,16 @@ export default function ExperienceControls({data}) {
   const refControls=useRef(null)
 
   useEffect(() => {
-    // console.log('ExpereinceControls:',experienceState?.snapPoint)
     if(experienceState?.snapPoint=='reset'){
-      // console.log('object',refControls.current.target)
       refControls.current.target=new THREE.Vector3()
       experienceDispatch({type:ACTIONS_EXPERIENCE.MODEL_VIEW})
-      // console.log('object',refControls.current)
     }else{
       scene.getObjectByName(experienceState?.snapPoint).traverse(i=>{
         if(i?.isMesh){
-          // console.log('mesh found:',i)
           if(i?.position && i?.rotation && refControls.current) {
             const modelPositiomRelativeToScene=i?.getWorldPosition(new THREE.Vector3())
             const modelRoationRelativeToScene=i?.getWorldQuaternion(new THREE.Quaternion())
-            // console.log('snapoint position:',modelPositiomRelativeToScene)
-            // console.log('snapoint rotation:',modelRoationRelativeToScene)
+
             if(modelPositiomRelativeToScene && modelRoationRelativeToScene){
               refControls.current.target=modelPositiomRelativeToScene
               refControls.current.object.quaternion.copy(modelRoationRelativeToScene)
@@ -35,13 +29,11 @@ export default function ExperienceControls({data}) {
           }else{
             console.log('snapPoint Object not yet location or present')
           }
-          // setSnapPoint(i)
         }
       })
     }
   }, [experienceState?.snapPoint])
 
-    // console.log('ExpereinceControls:',experienceState?.snapPoint)
   return (
     <OrbitControls
       ref={refControls}

@@ -3,10 +3,9 @@ import React from 'react'
 // import ExperienceWrapper from '@/components/experience/ExperienceWrapper'
 import { url } from '@/libs/libs'
 import dynamic from 'next/dynamic'
-import ExperienceUI from '@/components/experience/ExperienceUI'
-import { ExperienceContext } from '@/libs/contextProviders/experienceContext'
+import ExperienceContextProvider from '@/libs/contextProviders/experienceContext'
 
-const ExperienceWrapper=dynamic(() => import('@/components/experience/ExperienceWrapper'))
+const ExperienceWorld = dynamic(() => import('@/components/experience/ExperienceWorld'))
 
 async function getData(id) {
   const res = await fetch(`${url}/${id}`)
@@ -26,10 +25,10 @@ export default async function page({params}) {
   // const data=getData(id)÷
   const data=buildingDB[id]
   // console.log(data,`${url}/${id}`)
+
   return (
-    <div className='flex relative h-svh w-full items-center justify-center overflow-hidden'>
-      <ExperienceWrapper data={data}/>
-      <ExperienceUI data={data}/>
-    </div>
+    <ExperienceContextProvider>
+      <ExperienceWorld data={data}/>
+    </ExperienceContextProvider>
   )
 }

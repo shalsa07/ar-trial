@@ -1,0 +1,112 @@
+'use client'
+import React, { useState } from 'react'
+import ExperienceUI from '@/components/experience/ExperienceUI'
+import dynamic from 'next/dynamic'
+import { useExperienceContext } from '@/libs/contextProviders/experienceContext'
+import { ACTIONS_EXPERIENCE } from '@/libs/contextProviders/reducerExperience'
+
+const ExperienceWrapper=dynamic(() => import('@/components/experience/ExperienceWrapper'))
+
+async function getData(id) {
+  const res = await fetch(`${url}/${id}`)
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+ 
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+ 
+  return res.json()
+}
+
+export default function ExperienceWorld({data}) {
+    const [expandContainer,setExpandContainer]=useState(false)
+    const {experienceState,experienceDispatch}=useExperienceContext()
+    const [activeBtnIndex,setActiveBtnIndex]=useState(0)
+    // const [objectHiddenState,setObjectHiddenState]=useState(false)
+    // const [levelList,setLevelList]=useState(data?.hideLevel || [])
+    // const [levelListUpdate,setLevelListUpdate]=useState([])
+    
+    const options=['360s','model',' AR']
+    const styleTopCss='btn-wrapper flex h-fit rounded-xl w-full bg-slate-500/50 items-center justify-center p-1 text-white gap-2 shadow'
+    const styleCss='btn-wrapper flex flex-col h-fit rounded-3xl w-full bg-slate-400/35 items-center justify-center p-1 text-white gap-1 select-none'
+    const styleBtnCss=`flex cursor-pointer items-center justify-center select-none border-2 border-gray-400 p-1 bg-slate-900/75 ${expandContainer ? 'text-xs' : 'text-sm'} shadow text-sm capitalize rounded-full cursor-pointer w-full min-h-10`
+
+
+    const handleModeClick=(index)=>{
+        console.log('handleModeClick',index)
+        setActiveBtnIndex(index)
+        index==0 && experienceDispatch({type:ACTIONS_EXPERIENCE._360_VIEW})
+        index==1 && experienceDispatch({type:ACTIONS_EXPERIENCE.MODEL_VIEW})
+        index==2 && experienceDispatch({type:ACTIONS_EXPERIENCE.AR_VIEW})
+    }
+
+    const handleHideLevelClick=(name)=>{
+        // console.log('handleModeClick',name)
+        const priorityList=[]
+        levelList?.map(i=>priorityList?.push(i?.priority))
+        if(!Array.isArray(priorityList)) {
+            new Error("Input must be an array");
+        }
+        // console.log('handleHideLevelClick match',levelList)
+        const lowestPriorityValue=Math.min(...priorityList)
+        const matchBasedOnSelection=levelList?.find(i=>i?.name==name)
+        // console.log('handleHideLevelClick match',matchBasedOnSelection?.priority)
+        if(matchBasedOnSelection?.priority==lowestPriorityValue){
+            // console.log('adjust the list')
+            // console.log('object to hide:',matchBasedOnSelection)
+            setLevelList(prev=>prev.filter(i=>i?.name!==matchBasedOnSelection?.name))
+            experienceDispatch({type:ACTIONS_EXPERIENCE.HIDE_LEVEL,payload:{nameOfObject:matchBasedOnSelection?.name,visible:false,reset:false}})
+            // console.log('updated the list:',levelList)
+            // setObjectHiddenState(!objectHiddenState)
+        }
+        else if(levelList?.length==0){
+            // console.log('there nothing to hide, reset')
+            setLevelList(data?.hideLevel)
+            experienceDispatch({type:ACTIONS_EXPERIENCE.HIDE_LEVEL,payload:{reset:true}})
+        }
+        else{
+            console.log('lowestPriorityValue doesnt macthes object')
+        }
+    }
+
+    const handleSnapPoint=(snapPoint)=>{
+        // console.log('handleSnapPoint:',snapPoint)
+        experienceDispatch({type:ACTIONS_EXPERIENCE.SNAPPOINT,payload:snapPoint})
+    }
+
+    console.log(experienceState)
+
+    return (
+        <>
+            <div className='flex relative h-svh w-full items-center justify-center overflow-hidden'>
+                <ExperienceWrapper 
+                    options={options} 
+                    styleTopCss={styleTopCss} 
+                    styleCss={styleCss} 
+                    styleBtnCss={styleBtnCss} 
+                    data={data}
+                    handleHideLevelClick={handleHideLevelClick}
+                    handleSnapPoint={handleSnapPoint}
+                    handleModeClick={handleModeClick}
+                    activeBtnIndex={activeBtnIndex}
+                />
+                <ExperienceWrapper data={data} />
+                <ExperienceUI 
+                    data={data}
+                    options={options} 
+                    styleTopCss={styleTopCss} 
+                    styleCss={styleCss} 
+                    styleBtnCss={styleBtnCss} 
+                    setExpandContainer={setExpandContainer}
+                    expandContainer={expandContainer}
+                    activeBtnIndex={activeBtnIndex}
+                    handleHideLevelClick={handleHideLevelClick}
+                    handleSnapPoint={handleSnapPoint}
+                    handleModeClick={handleModeClick}
+                />
+            </div>
+        </>
+    )
+}
