@@ -145,7 +145,7 @@ export const buildingDB=[
       }
     ],
     position:'-12,0,-3',
-    arPosition:'-8,0,-20',
+    arPosition:'-8,0,-8',
     minDistance: "30",
     maxDistance: "60",
     roomSnaps: [

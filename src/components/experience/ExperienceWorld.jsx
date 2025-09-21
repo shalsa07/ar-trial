@@ -29,20 +29,27 @@ export default function ExperienceWorld({data}) {
     const [levelListUpdate,setLevelListUpdate]=useState([])
     const [rotationZ,setRotationZ]=useState(0)
     const [scaleModel,setScaleModel]=useState(1)
+    const [activate,setActivate]=useState(false)
     
     const scaleModels=[1,0.40,0.15]
-    const options=['360s','model',' AR']
+    const options=['360s','model']
     const styleTopCss='btn-wrapper flex h-fit rounded-xl w-full bg-slate-500/50 items-center justify-center p-1 text-white gap-2 shadow'
     const styleCss='btn-wrapper flex flex-col h-fit rounded-3xl w-full bg-slate-400/35 items-center justify-center p-1 text-white gap-1 select-none'
-    const styleBtnCss=`flex cursor-pointer items-center justify-center select-none border-2 border-gray-400 p-1 bg-slate-900/75 ${expandContainer ? 'text-xs' : 'text-sm'} shadow text-sm capitalize rounded-full cursor-pointer w-full min-h-10`
-
+    const styleBtnCss=`flex relative cursor-pointer items-center justify-center select-none border-2 border-gray-400 p-1 bg-slate-900/75 ${expandContainer ? 'text-xs' : 'text-sm'} shadow text-sm capitalize rounded-full cursor-pointer w-full min-h-10`
+    const style360BtnCss=`flex relative cursor-pointer items-center justify-center select-none border-2 border-gray-400 bg-slate-900/75 ${expandContainer ? 'text-xs' : 'text-sm'} shadow capitalize rounded-full cursor-pointer w-full min-h-10  overflow-hidden`
 
     const handleModeClick=(index)=>{
         // console.log('handleModeClick',index)
         setActiveBtnIndex(index)
         index==0 && experienceDispatch({type:ACTIONS_EXPERIENCE._360_VIEW})
         index==1 && experienceDispatch({type:ACTIONS_EXPERIENCE.MODEL_VIEW})
-        index==2 && experienceDispatch({type:ACTIONS_EXPERIENCE.AR_VIEW})
+        // index==2 && experienceDispatch({type:ACTIONS_EXPERIENCE.AR_VIEW})
+    }
+
+    const handleARModeClick=(index)=>{
+        // console.log('handleModeClick',index)
+        setActivate(!activate)
+        experienceDispatch({type:ACTIONS_EXPERIENCE.AR_VIEW})
     }
 
     const handleModelScale = (value) => {
@@ -53,7 +60,6 @@ export default function ExperienceWorld({data}) {
       setRotationZ(value)
     }
     
-
     const handleHideLevelClick=(name)=>{
         // console.log('handleModeClick',name)
         const priorityList=[]
@@ -88,7 +94,7 @@ export default function ExperienceWorld({data}) {
         experienceDispatch({type:ACTIONS_EXPERIENCE.SNAPPOINT,payload:snapPoint})
     }
 
-    console.log(experienceState?._360Mode)
+    // console.log(experienceState?._360Mode)
 
     return (
         <>
@@ -110,6 +116,9 @@ export default function ExperienceWorld({data}) {
                     handleModelScale={handleModelScale}
                     handleRotationZ={handleRotationZ}
                     scaleModels={scaleModels}
+                    handleARModeClick={handleARModeClick}
+                    activate={activate}
+                    style360BtnCss={style360BtnCss}
                 />
                 <ExperienceUI 
                     data={data}
@@ -123,6 +132,9 @@ export default function ExperienceWorld({data}) {
                     handleHideLevelClick={handleHideLevelClick}
                     handleSnapPoint={handleSnapPoint}
                     handleModeClick={handleModeClick}
+                    handleARModeClick={handleARModeClick}
+                    activate={activate}
+                    style360BtnCss={style360BtnCss}
                 />
             </div>
         </>

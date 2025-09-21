@@ -15,7 +15,7 @@ import { degToRad } from 'three/src/math/MathUtils'
 
 export default function ExperienceWrapper({
     data, options, styleBtnCss, activeBtnIndex, handleModeClick,styleTopCss,styleCss,setExpandContainer,expandContainer,handleHideLevelClick,handleSnapPoint,
-    rotationZ, scaleModel, scaleModels, handleModelScale,handleRotationZ
+    rotationZ, scaleModel, scaleModels, handleModelScale,handleRotationZ,handleARModeClick,activate
 }) {
     const [store] = useState(() => createXRStore())
     const {experienceState,experienceDispatch}=useExperienceContext()
@@ -56,6 +56,7 @@ export default function ExperienceWrapper({
                         {/* 3D OPTIONS BUTTONS */}
                         <ExperienceUIAR
                             data={data}
+                            style360BtnCss={style360BtnCss}
                             options={options}
                             styleTopCss={styleTopCss} 
                             styleCss={styleCss} 
@@ -73,17 +74,20 @@ export default function ExperienceWrapper({
                             rotationZ={rotationZ}
                             handleModelScale={handleModelScale}
                             handleRotationZ={handleRotationZ}
+                            handleARModeClick={handleARModeClick}
+                            activate={activate}
                         />
                     </XRDomOverlay>
                 )}
                 <ExperienceLighting/>
-                {experienceState?.modelMode && <ExperienceModel data={data}/>}
-                {experienceState?.ARMode && <group 
-                    scale={[scaleModel,scaleModel,scaleModel]} 
-                    rotation-y={degToRad(rotationZ)} 
-                    position={[0,-1,-20]}
-                ><ExperienceModel data={data}/></group>}
-                {experienceState?._360Mode && <Experience360s data={data}/>}
+                {(experienceState.modelMode || experienceState.ARMode) && <group
+                    scale={experienceState.ARMode ? [scaleModel, scaleModel, scaleModel] : [1, 1, 1]}
+                    rotation-y={experienceState.ARMode ? degToRad(rotationZ) : 0}
+                    position={experienceState.ARMode ? [0, -1, -20] : [0, 0, 0]}
+                >
+                    <ExperienceModel data={data} />
+                </group>}
+                {(experienceState?._360Mode || experienceState.ARMode) && <Experience360s data={data}/>}
                 {!experienceState?.ARMode && <ExperienceControls data={data}/>}
             </XR>
         </Suspense>
