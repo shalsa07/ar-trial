@@ -15,7 +15,7 @@ import { degToRad } from 'three/src/math/MathUtils'
 
 export default function ExperienceWrapper({
     data, options, styleBtnCss, activeBtnIndex, handleModeClick,styleTopCss,styleCss,setExpandContainer,expandContainer,handleHideLevelClick,handleSnapPoint,
-    rotationZ, scaleModel, handleModelScale,handleRotationZ
+    rotationZ, scaleModel, scaleModels, handleModelScale,handleRotationZ
 }) {
     const [store] = useState(() => createXRStore())
     const {experienceState,experienceDispatch}=useExperienceContext()
@@ -69,6 +69,7 @@ export default function ExperienceWrapper({
                             experienceState={experienceState}
                             experienceDispatch={experienceDispatch}
                             scaleModel={scaleModel}
+                            scaleModels={scaleModels}
                             rotationZ={rotationZ}
                             handleModelScale={handleModelScale}
                             handleRotationZ={handleRotationZ}

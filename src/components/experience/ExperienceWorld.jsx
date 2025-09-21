@@ -28,8 +28,9 @@ export default function ExperienceWorld({data}) {
     const [levelList,setLevelList]=useState(data?.hideLevel || [])
     const [levelListUpdate,setLevelListUpdate]=useState([])
     const [rotationZ,setRotationZ]=useState(0)
-    const [scaleModel,setScaleModel]=useState([1,0.75,0.50,0.25])
+    const [scaleModel,setScaleModel]=useState(1)
     
+    const scaleModels=[1,0.40,0.15]
     const options=['360s','model',' AR']
     const styleTopCss='btn-wrapper flex h-fit rounded-xl w-full bg-slate-500/50 items-center justify-center p-1 text-white gap-2 shadow'
     const styleCss='btn-wrapper flex flex-col h-fit rounded-3xl w-full bg-slate-400/35 items-center justify-center p-1 text-white gap-1 select-none'
@@ -108,6 +109,7 @@ export default function ExperienceWorld({data}) {
                     scaleModel={scaleModel}
                     handleModelScale={handleModelScale}
                     handleRotationZ={handleRotationZ}
+                    scaleModels={scaleModels}
                 />
                 <ExperienceUI 
                     data={data}

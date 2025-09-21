@@ -5,12 +5,14 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { ACTIONS_EXPERIENCE } from '@/libs/contextProviders/reducerExperience'
 
 export default function ExperienceUIAR({
-    data,options,styleTopCss,styleCss,styleBtnCss,setExpandContainer,expandContainer,activeBtnIndex,handleHideLevelClick,handleSnapPoint,handleModeClick,experienceState,experienceDispatch, handleModelScale, handleRotationZ,scaleModel,rotationZ
+    data,options,styleTopCss,styleCss,styleBtnCss,setExpandContainer,expandContainer,activeBtnIndex,handleHideLevelClick,handleSnapPoint,handleModeClick,experienceState,experienceDispatch, handleModelScale, handleRotationZ,scaleModel,rotationZ,scaleModels
 }) {
 
     const [objectHiddenState,setObjectHiddenState]=useState(false)
     const [levelList,setLevelList]=useState(data?.hideLevel || [])
     const [levelListUpdate,setLevelListUpdate]=useState([])
+
+    console.log('ExperienceUIAR:',scaleModel)
 
   return (
     <>
@@ -78,15 +80,14 @@ export default function ExperienceUIAR({
                     <label 
                         name="rotation"
                         className={`'btn-wrapper flex px-1 text-sm capitalize h-fit rounded-xl w-full bg-slate-500/50 items-center justify-center p-1 text-white gap-2 shadow'`}
-                    >model scale % :</label>
+                    >model-scale : ({scaleModel*100}%)</label>
+                    {/* >model-scale : ({scaleModel[0]*100}%)</label> */}
                     <select
                         className='text-sm'
                         onChange={(e)=>handleModelScale(e.target.value)}
+                        value={scaleModel}
                     >
-                        <option value={scaleModel[0]}>{scaleModel[0]*100}%</option>
-                        <option value={scaleModel[1]}>{scaleModel[1]*100}%</option>
-                        <option value={scaleModel[2]}>{scaleModel[2]*100}%</option>
-                        <option value={scaleModel[3]}>{scaleModel[3]*100}%</option>
+                        {scaleModels?.map((i,index)=><option key={index} value={scaleModels[index]}>{scaleModels[index]*100}%</option>)}
                     </select> 
                 </div>
             </div>
