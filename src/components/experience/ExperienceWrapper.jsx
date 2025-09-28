@@ -15,7 +15,7 @@ import { degToRad } from 'three/src/math/MathUtils'
 
 export default function ExperienceWrapper({
     data, options, styleBtnCss, activeBtnIndex, handleModeClick,styleTopCss,styleCss,setExpandContainer,expandContainer,handleHideLevelClick,handleSnapPoint,
-    rotationZ, scaleModel, scaleModels, handleModelScale,handleRotationZ,handleARModeClick,activate
+    rotationZ, scaleModel, scaleModels, handleModelScale,handleRotationZ,handleARModeClick,activate,style360BtnCss
 }) {
     const [store] = useState(() => createXRStore())
     const {experienceState,experienceDispatch}=useExperienceContext()
@@ -56,7 +56,6 @@ export default function ExperienceWrapper({
                         {/* 3D OPTIONS BUTTONS */}
                         <ExperienceUIAR
                             data={data}
-                            style360BtnCss={style360BtnCss}
                             options={options}
                             styleTopCss={styleTopCss} 
                             styleCss={styleCss} 
@@ -76,6 +75,7 @@ export default function ExperienceWrapper({
                             handleRotationZ={handleRotationZ}
                             handleARModeClick={handleARModeClick}
                             activate={activate}
+                            style360BtnCss={style360BtnCss}
                         />
                     </XRDomOverlay>
                 )}
@@ -87,7 +87,7 @@ export default function ExperienceWrapper({
                 >
                     <ExperienceModel data={data} />
                 </group>}
-                {(experienceState?._360Mode || experienceState.ARMode) && <Experience360s data={data}/>}
+                {experienceState?._360Mode && <Experience360s data={data}/>}
                 {!experienceState?.ARMode && <ExperienceControls data={data}/>}
             </XR>
         </Suspense>

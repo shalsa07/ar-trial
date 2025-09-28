@@ -28,7 +28,7 @@ export const reducerExperienceFunction=(state,action)=>{
                 ...state,
                 firstPersonView:true,
                 _360Mode:true,
-                // ARMode:false,
+                ARMode: false,
                 modelMode:false,
             }
         case 'MODEL_VIEW':
@@ -36,16 +36,27 @@ export const reducerExperienceFunction=(state,action)=>{
                 ...state,
                 firstPersonView:false,
                 _360Mode:false,
-                // ARMode:false,
+                ARMode: false,
                 modelMode:true,
             }
         case 'AR_VIEW':
+            if (state.ARMode) {
+                // Exiting AR mode: go back to the default 360 view
+                return {
+                    ...state,
+                    firstPersonView: true,
+                    _360Mode: true,
+                    ARMode: false,
+                    modelMode: false,
+                };
+            }
+            // Entering AR mode
             return {
                 ...state,
                 firstPersonView:false,
-                // _360Mode:false,
-                ARMode:!state.ARMode,
-                modelMode:false,
+                _360Mode: false,
+                ARMode: true,
+                modelMode: true,
             }
         case 'HIDE_LEVEL':
             return {

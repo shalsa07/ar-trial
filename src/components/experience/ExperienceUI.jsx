@@ -6,7 +6,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
 
 export default function ExperienceUI({
-    data,options,styleTopCss,styleCss,styleBtnCss,setExpandContainer,expandContainer,activeBtnIndex,handleHideLevelClick,handleSnapPoint,handleModeClick,handleARModeClick,activate,style360BtnCss
+    data,options,styleTopCss,styleCss,styleBtnCss,setExpandContainer,expandContainer,activeBtnIndex,handleHideLevelClick,handleSnapPoint,handleModeClick,handleARModeClick,activate,style360BtnCss,arSupported
 }) {
     const {experienceState,experienceDispatch}=useExperienceContext()
 
@@ -36,7 +36,7 @@ export default function ExperienceUI({
         </div>
 
         {/* AR OPTIONS BUTTONS */}
-        <div className='btn-options flex absolute gap-1 z-20 right-4 top-20 w-fit rounded-full h-fit bg-black/75 items-center justify-center p-1 text-white'>
+        {arSupported && <div className='btn-options flex absolute gap-1 z-20 right-4 top-20 w-fit rounded-full h-fit bg-black/75 items-center justify-center p-1 text-white'>
             <div 
                 onClick={()=>handleARModeClick()} 
                 className={`px-2 ${styleBtnCss}`} 
@@ -44,7 +44,7 @@ export default function ExperienceUI({
             >
                 <span className='text-nowrap'>AR</span>
             </div>
-        </div>
+        </div>}
 
         {/* VIEWS BUTTONS */}
         {<div className={`btns-left-container flex flex-col gap-2 absolute z-20 my-auto left-2 md:left-2 h-fit ${expandContainer ? 'w-32' : 'w-16'} bg-black/75 rounded-3xl p-1 duration-300 ease-linear`}>

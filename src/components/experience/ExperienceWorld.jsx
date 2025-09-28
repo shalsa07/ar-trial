@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ExperienceUI from '@/components/experience/ExperienceUI'
 import dynamic from 'next/dynamic'
 import { useExperienceContext } from '@/libs/contextProviders/experienceContext'
@@ -30,6 +30,7 @@ export default function ExperienceWorld({data}) {
     const [rotationZ,setRotationZ]=useState(0)
     const [scaleModel,setScaleModel]=useState(1)
     const [activate,setActivate]=useState(false)
+    const [arSupported,setARSupported]=useState(false)
     
     const scaleModels=[1,0.40,0.15]
     const options=['360s','model']
@@ -58,6 +59,23 @@ export default function ExperienceWorld({data}) {
 
     const handleRotationZ = (value) => {
       setRotationZ(value)
+    }
+
+    async function checkForARSupport() {
+        // 1. Check if the WebXR API is present in the browser's navigator object.
+        if (!navigator.xr) {
+            console.log("WebXR API is not available on this browser.");
+            return false;
+        }
+
+        try {
+            // 2. Check if the device supports an 'immersive-ar' session.
+            const isARSupported = await navigator.xr.isSessionSupported('immersive-ar');
+            return isARSupported;
+        } catch (error) {
+            console.error("An error occurred while checking for AR support:", error);
+            return false;
+        }
     }
     
     const handleHideLevelClick=(name)=>{
@@ -94,6 +112,10 @@ export default function ExperienceWorld({data}) {
         experienceDispatch({type:ACTIONS_EXPERIENCE.SNAPPOINT,payload:snapPoint})
     }
 
+    useEffect(()=>{
+        checkForARSupport().then(res=>setARSupported(res))
+    },[])
+
     // console.log(experienceState?._360Mode)
 
     return (
@@ -119,6 +141,7 @@ export default function ExperienceWorld({data}) {
                     handleARModeClick={handleARModeClick}
                     activate={activate}
                     style360BtnCss={style360BtnCss}
+                    arSupported={arSupported}
                 />
                 <ExperienceUI 
                     data={data}
@@ -135,6 +158,7 @@ export default function ExperienceWorld({data}) {
                     handleARModeClick={handleARModeClick}
                     activate={activate}
                     style360BtnCss={style360BtnCss}
+                    arSupported={arSupported}
                 />
             </div>
         </>

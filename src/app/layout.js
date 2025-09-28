@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ExperienceContextProvider, { ExperienceContext } from "@/libs/contextProviders/experienceContext";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "luyari.",
+  title: "PPSBluyari",
   description: "experience design",
 };
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar/>
+        <Footer/>
         <ExperienceContextProvider>
           {children}
         </ExperienceContextProvider>
