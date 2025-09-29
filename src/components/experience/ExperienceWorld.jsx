@@ -31,9 +31,10 @@ export default function ExperienceWorld({data}) {
     const [scaleModel,setScaleModel]=useState(1)
     const [activate,setActivate]=useState(false)
     const [arSupported,setARSupported]=useState(false)
+    const [virtaulizationState,setVirtaulizationState]=useState(false)
     
     const scaleModels=[1,0.40,0.15]
-    const options=['360s','model']
+    const options=['vr','ar']
     const styleTopCss='btn-wrapper flex h-fit rounded-xl w-full bg-slate-500/50 items-center justify-center p-1 text-white gap-2 shadow'
     const styleCss='btn-wrapper flex flex-col h-fit rounded-3xl w-full bg-slate-400/35 items-center justify-center p-1 text-white gap-1 select-none'
     const styleBtnCss=`flex relative cursor-pointer items-center justify-center select-none border-2 border-gray-400 p-1 bg-slate-900/75 ${expandContainer ? 'text-xs' : 'text-sm'} shadow text-sm capitalize rounded-full cursor-pointer w-full min-h-10`
@@ -51,6 +52,7 @@ export default function ExperienceWorld({data}) {
         // console.log('handleModeClick',index)
         setActivate(!activate)
         experienceDispatch({type:ACTIONS_EXPERIENCE.AR_VIEW})
+        setVirtaulizationState(!virtaulizationState)
     }
 
     const handleModelScale = (value) => {
@@ -159,6 +161,7 @@ export default function ExperienceWorld({data}) {
                     activate={activate}
                     style360BtnCss={style360BtnCss}
                     arSupported={arSupported}
+                    virtaulizationState={virtaulizationState}
                 />
             </div>
         </>

@@ -4,10 +4,16 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import RollOverStateWrapper from './RollOverStateWrapper'
 import { settings } from '@/libs/settings'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname=usePathname()
   const links=['home',,'about us','projects','services','contacts']
+
+  // console.log('Navbar:',pathname)
+
   return (
     <nav className='flex text-white absolute top-0 mx-auto z-50 justify-between w-full h-hit items-center'>
       <Link className='flex flex-1 items-center h-fit' href={'/'}>
@@ -20,9 +26,9 @@ export default function Navbar() {
         }
       </div>
 
-      <div className='flex-1 flex justify-end'>
+      {<div className={`flex-1 z-10 flex justify-end ${!pathname?.split('/').length>2 && 'invisible'}`}>
         <RollOverStateWrapper src={settings.btnsImages.signin_2}/>
-      </div>
+      </div>}
       
       {/* Mobile Menu */}
       {mobileMenuOpen && (
