@@ -2,7 +2,9 @@ export const settings={
     url:'https://localhost:3000/',
     whatsappNumber:'26774308319',
     luyariBlue:'bg-[#2fa2d0]',
+    luyariTextBlue:'text-[#2fa2d0]',
     luyariPurple:'bg-[#d02fa2]',
+    luyariTextPurple:'text-[#d02fa2]',
     luyariBlueBorder:'border-[#2fa2d0}',
     luyariPurpleBorder:'border-[#d02fa2}',
     btnsImages:{

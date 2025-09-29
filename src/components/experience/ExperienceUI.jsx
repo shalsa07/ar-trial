@@ -17,6 +17,7 @@ import { LuBath } from "react-icons/lu";
 import { TbArrowAutofitWidth } from "react-icons/tb";
 import { MdClose } from 'react-icons/md';
 import { HiDownload, HiEye, HiX } from 'react-icons/hi';
+import Image from 'next/image';
 
 export default function ExperienceUI({
     data,options,styleTopCss,styleCss,styleBtnCss,setExpandContainer,expandContainer,activeBtnIndex,handleHideLevelClick,handleSnapPoint,handleModeClick,handleARModeClick,activate,style360BtnCss,arSupported,virtaulizationState,
@@ -27,7 +28,12 @@ export default function ExperienceUI({
         return null
     }
 
+    const [objectHiddenState,setObjectHiddenState]=useState(false)
+    const [levelList,setLevelList]=useState(data?.hideLevel || [])
+    const [levelListUpdate,setLevelListUpdate]=useState([])
+    const [hideLevelStatus,setHideLevelStatus]=useState(false)
     const icons='w-5 h-5'
+    const cssOnOffBtn=`flex h-full w-8 ${hideLevelStatus ? 'bg-gray-600' : settings.luyariBlue} items-center cursor-pointer justify-center text-xs`
     const summary=[
         {name:'length',icon:<TbArrowAutofitWidth className={icons} />},
         {name:'width',icon:<TbArrowAutofitHeight className={icons} />},
@@ -37,11 +43,8 @@ export default function ExperienceUI({
         {name:'beds',icon:<IoCarOutline className={icons}/>}
     ]
     const btnStyles='flex items-center justify-center h-10 w-7'
-    const [objectHiddenState,setObjectHiddenState]=useState(false)
-    const [levelList,setLevelList]=useState(data?.hideLevel || [])
-    const [levelListUpdate,setLevelListUpdate]=useState([])
 
-    console.log('ExperienceUI:',data?.buildingSummary?.['length'])
+    console.log('ExperienceUI:',data)
 
   return (
     <>
@@ -133,16 +136,22 @@ export default function ExperienceUI({
             </div>
         </div>
 
-        {/* VIEWS BUTTONS */}
-        {<div className={`btns-left-container flex flex-col gap-2 absolute z-20 my-auto left-0 h-fit ${expandContainer ? 'w-44' : 'w-20'} bg-white p-1 duration-300 ease-linear`}>
-            <div className='flex flex-col gap-2 w-full h-full relative'>
-                {/* EXPAND TOGGLE BUTTON */}
-                <div onClick={()=>setExpandContainer(!expandContainer)} className='flex absolute bg-gray-300 rounded-full items-center justify-center my-auto top-0 bottom-0 -right-5 w-8 h-8 text-gray-500/75 cursor-pointer'>
-                    {expandContainer ? <FaAngleLeft/> : <FaAngleRight/>}
+        {/* LEFT UI */}
+        {<div className={`btns-left-container flex flex-col gap-1 absolute z-20 top-1/3 left-0 items-end h-fit ${expandContainer ? 'w-44' : 'w-32'} duration-300 ease-linear`}>
+            {/* EXPAND TOGGLE BUTTON */}
+            <div onClick={()=>setExpandContainer(!expandContainer)} className='flex bg-white items-center justify-center my-auto top-0 bottom-0 -right-5 w-12 h-12  p-[1px] text-gray-500/75 cursor-pointer'>
+                <div className='flex flex-col h-full w-full justify-center items-center border-1 border-gray-600'>
+                    <FaAngleLeft className='text-4xl'/>
                 </div>
+                {/* {expandContainer ? <FaAngleLeft/> : <FaAngleRight/>} */}
+            </div>
+            <div className='flex font-bold relative gap-1 flex-col w-full h-full'>
+                {data?.renders?.[0]?.url?.length>0 &&<div className='flex relative w-full h-20 items-center justify-center'>
+                    <Image src={data?.renders?.[0]?.url} alt='' fill/>
+                </div>}
 
                 {/* 360s BUTTONS */}
-                {data?._360sImages?.length>0 && experienceState?._360Mode && <div className={styleCss}>
+                {/* {data?._360sImages?.length>0 && experienceState?._360Mode && <div className={styleCss}>
                     {data?._360sImages?.map((i,index)=>
                         <div onClick={()=>handleHideLevelClick(i?.name)} className={style360BtnCss} key={index}>
                             {!expandContainer ? <div className='h-full w-full overflow-hidden'>
@@ -156,37 +165,44 @@ export default function ExperienceUI({
                             </div>}
                         </div>
                     )}
-                </div>}
+                </div>} */}
 
                 {/* LEVEL HIDE BUTTONS */}
-                {data?.hideLevel?.length>0 && (experienceState?.ARMode || experienceState?.modelMode) && <div className={styleCss}>
-                    {data?.hideLevel?.map((i,index)=>
-                        <div onClick={()=>handleHideLevelClick(i?.name)} className={styleBtnCss} key={index}>
-                            {!expandContainer ? <span className='truncate text-nowrap overflow-hidden'>{i?.name}</span> : <span className='text-center'>{i?.name}</span>}
+                {data?.hideLevel?.map((i,index)=>
+                    <div key={index} className='flex relative text-gray-500 items-center justify-center w-full h-8 uppercase text-xs'>
+                        <div 
+                            onClick={()=>handleHideLevelClick(i?.name)}
+                            className='flex w-full items-center justify-start pl-4 h-full bg-white'
+                        >
+                            {i?.name}
                         </div>
-                    )}
-                </div>}
+                        <div className='flex absolute left-[132px] h-fullw-fit gap-1 h-full items-center justify-center text-xs'>
+                            <div className={cssOnOffBtn}>on</div>
+                            <div className={cssOnOffBtn}>off</div>
+                        </div>
+                    </div>
+                )}
 
                 {/* VIEWS BUTTONS */}
-                {data?.roomSnaps?.length>0 && (experienceState?.ARMode || experienceState?.modelMode) && <div className={styleCss}>
-                    <div onClick={()=>handleSnapPoint('reset')} className={styleBtnCss}>
-                        home
+                {data?.roomSnaps?.length>0 && <div className='flex flex-col gap-1 relative text-gray-500 items-center justify-center w-full h-fit uppercase text-xs'>
+                    <div onClick={()=>handleSnapPoint('reset')} className='flex cursor-pointer w-full items-center justify-start pl-4 h-8 bg-white'>
+                        <div className={`border-b-3 w-full text-[#] ${settings.luyariBlueBorder} ${settings.luyariTextBlue}`}>home</div>
                     </div>
                     {data?.roomSnaps?.map((i,index)=>
-                        <div onClick={()=>handleSnapPoint(i?.name)} className={styleBtnCss} key={index}>
-                            {!expandContainer ? <span className='truncate text-nowrap overflow-hidden'>{i?.name}</span> : <span className='text-center'>{i?.name}</span>}
+                        <div onClick={()=>handleSnapPoint(i?.name)} className='flex cursor-pointer w-full items-center justify-start pl-4 h-8 bg-white' key={index}>
+                            <span className='text-center'>{i?.name}</span>
                         </div>
                     )}
                 </div>}
 
                 {/* COLOR BUTTONS */}
-                {data?.color?.length>0 && (experienceState?.ARMode || experienceState?.modelMode) && <div className={styleCss}>
+                {/* {data?.color?.length>0 &&<div className={styleCss}>
                     {data?.color?.map((i,index)=>
                         <div className={styleBtnCss} key={index}>
                             {!expandContainer ? <span className='truncate text-nowrap overflow-hidden'>{i?.name}</span> : <span className='text-center'>{i?.name}</span>}
                         </div>
                     )}
-                </div>}
+                </div>} */}
             </div>
         </div>}
     </>
