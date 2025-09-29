@@ -42,9 +42,9 @@ export default function ExperienceUI({
         {name:'cars',icon:<LuBath className={icons}/>}, 
         {name:'beds',icon:<IoCarOutline className={icons}/>}
     ]
-    const btnStyles='flex items-center justify-center h-10 w-7'
+    const btnStyles='flex items-center justify-center h-10 w-fit'
 
-    console.log('ExperienceUI:',data)
+    // console.log('ExperienceUI:',data)
 
   return (
     <>
@@ -54,29 +54,29 @@ export default function ExperienceUI({
                 {options?.map((i,index)=>
                     <div 
                         onClick={()=>handleModeClick(index)} 
-                        className={'w-1/2 h-full text-center font-bold items-center text-gray-500 bg-white justify-center'} 
+                        className={`flex w-1/2 h-full text-center font-bold items-center text-gray-500 justify-center text-nowrap`} 
                         key={index} 
                     >
-                        <span className='text-nowrap font-extrabold'>{i}</span>
+                        <div className={` flex items-center justify-center w-full h-full cursor-pointer ${!index==activeBtnIndex ? 'bg-gray-300' : 'bg-white'} ${index==0 ? 'pl-1' : 'pr-1'}`}>{i}</div>
                     </div>
                 )}
             </div>
-            <div className='uppercase text-6xl font-thin'>
+            <div className='uppercase select-none text-4xl font-thin'>
                 model
             </div>
             <div className='flex items-center h-10 w-fit'>
                 <div className={`${settings.luyariBlue} cursor-pointer ${btnStyles}`}>
-                    <span className='flex text-sm items-center'>360</span>
+                    <span className='flex text-sm px-2 items-center'>360</span>
                 </div>
-                <div className={`bg-gray-300 cursor-pointer ${btnStyles}`}>
+                <div className={`bg-gray-400 px-3 cursor-pointer ${btnStyles}`}>
                     <HiOutlineHome/>
                 </div>
-                <div className={`bg-gray-300 cursor-pointer ${btnStyles}`}>
+                <div className={`bg-gray-500 px-3 cursor-pointer ${btnStyles}`}>
                     <IoDocumentTextOutline/>
                 </div>
             </div>
-            <span className='text-xs'>
-                press
+            <span className='flex w-2/3 text-center text-xs flex-wrap'>
+                Prees and drag with your mouse or finder to rotate the model
             </span>
         </div>
 
@@ -91,7 +91,7 @@ export default function ExperienceUI({
                 </div>
             </div>
             <div className='h-full w-full flex'>
-                <div className='flex flex-col h-[calc(100%-32px)] w-full items-center justify-start px-4'>
+                <div className='flex flex-col h-[calc(100%-32px)] w-full items-center justify-start pl-4'>
                     <div className='flex flex-col h-fit text-xs w-full p-2 overflow-y-auto gap-2 mb-4'>
                         <h1 className='text-3xl uppercase'>
                             {data?.buildingTitle}
@@ -169,7 +169,7 @@ export default function ExperienceUI({
 
                 {/* LEVEL HIDE BUTTONS */}
                 {data?.hideLevel?.map((i,index)=>
-                    <div key={index} className='flex relative text-gray-500 items-center justify-center w-full h-8 uppercase text-xs'>
+                    <div key={index} className='flex relative text-gray-500 items-center justify-center w-full h-7 uppercase text-xs'>
                         <div 
                             onClick={()=>handleHideLevelClick(i?.name)}
                             className='flex w-full items-center justify-start pl-4 h-full bg-white'
@@ -185,11 +185,11 @@ export default function ExperienceUI({
 
                 {/* VIEWS BUTTONS */}
                 {data?.roomSnaps?.length>0 && <div className='flex flex-col gap-1 relative text-gray-500 items-center justify-center w-full h-fit uppercase text-xs'>
-                    <div onClick={()=>handleSnapPoint('reset')} className='flex cursor-pointer w-full items-center justify-start pl-4 h-8 bg-white'>
+                    <div onClick={()=>handleSnapPoint('reset')} className='flex cursor-pointer w-full items-center justify-start pl-4 h-7 bg-white'>
                         <div className={`border-b-3 w-full text-[#] ${settings.luyariBlueBorder} ${settings.luyariTextBlue}`}>home</div>
                     </div>
                     {data?.roomSnaps?.map((i,index)=>
-                        <div onClick={()=>handleSnapPoint(i?.name)} className='flex cursor-pointer w-full items-center justify-start pl-4 h-8 bg-white' key={index}>
+                        <div onClick={()=>handleSnapPoint(i?.name)} className='flex cursor-pointer w-full items-center justify-start pl-4 h-7 bg-white' key={index}>
                             <span className='text-center'>{i?.name}</span>
                         </div>
                     )}
