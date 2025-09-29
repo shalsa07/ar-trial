@@ -8,11 +8,12 @@ export const buildingDB=[
     buildingType: "single-storey",
     desc: "The brief was to come with a cozy 4 bedroom house with a guest room attached. It also had to have a pajama lounge for the viewing television as well as a separate formal lounge which would be used to entertain quests. The design needed to be trendy but understated. It need to sophisticated enough but affordable to build",
     buildingSummary: {
-      "area": "235",
-      "beds": "4",
-      "level": "1",
-      "baths": "3",
-      "cars": "2"
+      "length": 12,
+      "width": 23,
+      "baths": 3,
+      "levels": 2,
+      "cars": 2,
+      "beds": 1
     },
     features: "FEATURES: 4 Bedrooms, a Guest Bedroom, Breakfast - nook, Pajama-lounge, Scullery, formal dining, Office space, outdoor seating and entertainment area, and an airy kitchen",
     outroSection: "The design celebrates the life style of the client and as occurred as the plot was the challenge was truly inspirational",
@@ -219,11 +220,12 @@ export const buildingDB=[
     buildingType: "single-storey",
     desc: "The brief was to come with a cozy 4 bedroom house with a guest room attached. It also had to have a pajama lounge for the viewing television as well as a separate formal lounge which would be used to entertain quests. The design needed to be trendy but understated. It need to sophisticated enough but affordable to build",
     buildingSummary: {
-      "area": "235",
-      "beds": "4",
-      "level": "1",
-      "baths": "3",
-      "cars": "2"
+       "length": 12,
+      "width": 23,
+      "baths": 3,
+      "levels": 2,
+      "cars": 2,
+      "beds": 1
     },
     features: "FEATURES: 4 Bedrooms, a Guest Bedroom, Breakfast - nook, Pajama-lounge, Scullery, formal dining, Office space, outdoor seating and entertainment area, and an airy kitchen",
     outroSection: "The design celebrates the life style of the client and as occurred as the plot was the challenge was truly inspirational",
@@ -419,11 +421,12 @@ export const buildingDB=[
     buildingType: "single-storey",
     desc: "The brief was to come with a cozy 4 bedroom house with a guest room attached. It also had to have a pajama lounge for the viewing television as well as a separate formal lounge which would be used to entertain quests. The design needed to be trendy but understated. It need to sophisticated enough but affordable to build",
     buildingSummary: {
-      "area": "235",
-      "beds": "4",
-      "level": "1",
-      "baths": "3",
-      "cars": "2"
+       "length": 12,
+      "width": 23,
+      "baths": 3,
+      "levels": 2,
+      "cars": 2,
+      "beds": 1
     },
     features: "FEATURES: 4 Bedrooms, a Guest Bedroom, Breakfast - nook, Pajama-lounge, Scullery, formal dining, Office space, outdoor seating and entertainment area, and an airy kitchen",
     outroSection: "The design celebrates the life style of the client and as occurred as the plot was the challenge was truly inspirational",
@@ -594,11 +597,12 @@ export const buildingDB=[
     buildingType: "multi-storey",
     desc: "The brief was to come with a cozy 4 bedroom house with a guest room attached. It also had to have a pajama lounge for the viewing television as well as a separate formal lounge which would be used to entertain quests. The design needed to be trendy but understated. It need to sophisticated enough but affordable to build",
     buildingSummary: {
-      "area": "600",
-      "beds": "5",
-      "level": "3",
-      "baths": "5",
-      "cars": "4"
+      "length": 12,
+      "width": 23,
+      "baths": 3,
+      "levels": 2,
+      "cars": 2,
+      "beds": 1
     },
     features: "FEATURES: 4 Bedrooms, a Guest Bedroom, Breakfast - nook, Pajama-lounge, Scullery, formal dining, Office space, outdoor seating and entertainment area, and an airy kitchen",
     outroSection: "The design celebrates the life style of the client and as occurred as the plot was the challenge was truly inspirational",

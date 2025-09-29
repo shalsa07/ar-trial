@@ -9,6 +9,14 @@ import { HiOutlineHome } from "react-icons/hi2";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import RollOverStateWrapper from '../RollOverStateWrapper';
 import { IoMdClose } from "react-icons/io";
+import { IoCarOutline } from "react-icons/io5";
+import { IoBedOutline } from "react-icons/io5";
+import { TbArrowAutofitHeight } from "react-icons/tb";
+import { SiLevelsdotfyi } from "react-icons/si";
+import { LuBath } from "react-icons/lu";
+import { TbArrowAutofitWidth } from "react-icons/tb";
+import { MdClose } from 'react-icons/md';
+import { HiDownload, HiEye, HiX } from 'react-icons/hi';
 
 export default function ExperienceUI({
     data,options,styleTopCss,styleCss,styleBtnCss,setExpandContainer,expandContainer,activeBtnIndex,handleHideLevelClick,handleSnapPoint,handleModeClick,handleARModeClick,activate,style360BtnCss,arSupported,virtaulizationState,
@@ -19,13 +27,21 @@ export default function ExperienceUI({
         return null
     }
 
-    const summary=['length','width','levels','beds','baths','cars']
+    const icons='w-5 h-5'
+    const summary=[
+        {name:'length',icon:<TbArrowAutofitWidth className={icons} />},
+        {name:'width',icon:<TbArrowAutofitHeight className={icons} />},
+        {name:'baths',icon:<IoBedOutline className={icons}/>},
+        {name:'levels',icon:<SiLevelsdotfyi className={icons}/>}, 
+        {name:'cars',icon:<LuBath className={icons}/>}, 
+        {name:'beds',icon:<IoCarOutline className={icons}/>}
+    ]
     const btnStyles='flex items-center justify-center h-10 w-7'
     const [objectHiddenState,setObjectHiddenState]=useState(false)
     const [levelList,setLevelList]=useState(data?.hideLevel || [])
     const [levelListUpdate,setLevelListUpdate]=useState([])
 
-    console.log('ExperienceUI:',data)
+    console.log('ExperienceUI:',data?.buildingSummary?.['length'])
 
   return (
     <>
@@ -77,12 +93,14 @@ export default function ExperienceUI({
                         <h1 className='text-3xl uppercase'>
                             {data?.buildingTitle}
                         </h1>
-                        <div className='flex min-w-72 min-h-30 mt-1 overflow-hidden'>
+                        <div className='flex min-w-72 min-h-40 mt-1 overflow-hidden'>
                             <div className='flex flex-wrap w-2/3 h-full'>   
                                 {summary?.map((i,index)=>
                                     <div key={index} className='flex flex-col items-center justify-center h-1/2 w-1/3 p-1'>
-                                        <div className='bg-white text-xs w-full h-full text-gray-500 flex items-center border-1 border-gray-500 justify-center'>
-                                            {i}
+                                        <div className='bg-white text-xs w-full h-full text-gray-500 flex items-center border-1 border-gray-500 justify-center flex-col'>
+                                            <span className='uppercase text-xs'>{i?.name}</span>
+                                            <span className='text-xs'>{data?.buildingSummary?.[i] ? data?.buildingSummary?.[i]:'N/A'}</span>
+                                            {i?.icon}
                                         </div>
                                     </div>
                                 )}
