@@ -32,7 +32,7 @@ export default function ExperienceWorld({data}) {
     const [activate,setActivate]=useState(false)
     const [arSupported,setARSupported]=useState(false)
     const [virtaulizationState,setVirtaulizationState]=useState(false)
-    
+
     const scaleModels=[1,0.40,0.15]
     const options=['vr','ar']
     const styleTopCss='btn-wrapper flex h-fit rounded-xl w-full bg-slate-500/50 items-center justify-center p-1 text-white gap-2 shadow'

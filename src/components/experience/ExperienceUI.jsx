@@ -185,7 +185,7 @@ export default function ExperienceUI({
 
                 {/* VIEWS BUTTONS */}
                 {data?.roomSnaps?.length>0 && <div className='flex flex-col gap-1 relative text-gray-500 items-center justify-center w-full h-fit uppercase text-xs'>
-                    <div onClick={()=>handleSnapPoint('reset')} className='flex cursor-pointer w-full items-center justify-start pl-4 h-7 bg-white'>
+                    <div onClick={()=>handleSnapPoint('reset')} className='flex cursor-pointer w-full items-center justify-start pl-2 h-7 bg-white'>
                         <div className={`border-b-3 w-full text-[#] ${settings.luyariBlueBorder} ${settings.luyariTextBlue}`}>home</div>
                     </div>
                     {data?.roomSnaps?.map((i,index)=>
