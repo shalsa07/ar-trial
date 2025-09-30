@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    // Add the 'experimental' and 'turbopack' properties
-    experimental: {
-        turbopack: {
-        resolveAlias: {
-            'three': 'three/build/three.module.js',
-        },
-        },
+    webpack: (config) => {
+        // This is the new, correct way to add the alias
+        config.resolve.alias.three = 'three/build/three.module.js';
+        return config;
     },
 };
 
